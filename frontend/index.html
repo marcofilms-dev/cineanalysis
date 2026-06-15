@@ -1,38 +1,1173 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.6">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 12.0px 'Helvetica Neue'; color: #ececef; -webkit-text-stroke: #ececef; min-height: 15.0px}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 13.0px 'Helvetica Neue'; color: #585767; -webkit-text-stroke: #585767}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 15.0px 'Helvetica Neue'; color: #585767; -webkit-text-stroke: #585767}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px 'Helvetica Neue'; color: #585767; -webkit-text-stroke: #585767}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; color: #ececef; -webkit-text-stroke: #ececef; background-color: #131315; min-height: 16.0px}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 13.0px 'Helvetica Neue'; color: #ececef; -webkit-text-stroke: #000000; background-color: #e3ff38}
-    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px 'Helvetica Neue'; color: #2c2c34; -webkit-text-stroke: #2c2c34}
-    span.s1 {font-kerning: none}
-    span.s2 {font-kerning: none; color: #e3ff38; -webkit-text-stroke: 0px #e3ff38}
-    span.s3 {font-kerning: none; background-color: #0e0e10}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>CineAnalyzer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #080809;
+  --surface: #111113;
+  --surface2: #17171a;
+  --surface3: #1f1f23;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.09);
+  --border3: rgba(255,255,255,0.15);
+  --text: #ededef;
+  --text-2: #a0a0ab;
+  --text-3: #52525e;
+  --text-4: #2a2a32;
+  --accent: #c8f135;
+  --accent-dim: rgba(200,241,53,0.06);
+  --accent-border: rgba(200,241,53,0.15);
+  --red: #f04747;
+  --sans: 'Geist', -apple-system, sans-serif;
+  --mono: 'Geist Mono', monospace;
+  --r: 6px;
+  --r-lg: 10px;
+}
+
+html, body {
+  background: #080809 !important;
+  color: var(--text);
+  font-family: var(--sans);
+  min-height: 100vh;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── FULL WIDTH WRAPPER ── */
+.page { width: 100%; }
+
+/* ── CONSTRAINED CENTER ── */
+.center {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ── NAV ── */
+nav {
+  width: 100%;
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+}
+
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.logo-mark {
+  width: 20px; height: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5px;
+}
+
+.logo-mark span { border-radius: 1.5px; display: block; }
+.lm1 { background: var(--accent); }
+.lm2 { background: var(--accent); opacity: 0.35; }
+.lm3 { background: var(--accent); opacity: 0.35; }
+.lm4 { background: var(--text-3); }
+
+.logo-name {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-link {
+  font-size: 13px;
+  color: var(--text-3);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.nav-link:hover { color: var(--text-2); }
+
+.nav-cta {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--bg);
+  background: var(--accent);
+  border: none;
+  border-radius: var(--r);
+  padding: 7px 14px;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  transition: opacity 0.15s;
+}
+
+.nav-cta:hover { opacity: 0.85; }
+
+/* ── HERO ── */
+.hero-section {
+  width: 100%;
+  padding: 100px 40px 80px;
+  text-align: center;
+}
+
+.hero-inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  width: 14px; height: 1px;
+  background: var(--text-4);
+}
+
+h1 {
+  font-size: clamp(38px, 5.5vw, 64px);
+  font-weight: 600;
+  line-height: 1.07;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+h1 .accent { color: var(--accent); }
+
+.hero-desc {
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.65;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  margin-bottom: 40px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.input-row {
+  display: flex;
+  gap: 8px;
+  max-width: 560px;
+  margin: 0 auto 16px;
+}
+
+.url-input {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color 0.15s;
+  min-width: 0;
+}
+
+.url-input::placeholder { color: var(--text-4); }
+.url-input:focus { border-color: var(--border3); }
+
+.analyze-btn {
+  background: var(--accent);
+  color: #080809;
+  border: none;
+  border-radius: var(--r);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  padding: 12px 22px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s, transform 0.1s;
+  flex-shrink: 0;
+}
+
+.analyze-btn:hover { opacity: 0.88; }
+.analyze-btn:active { transform: scale(0.98); }
+.analyze-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+
+.platform-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.plat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-4);
+  letter-spacing: 0.06em;
+  margin-right: 2px;
+}
+
+.plat-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 2px 7px;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── TOOLS SECTION ── */
+.tools-section {
+  width: 100%;
+  padding: 80px 40px;
+}
+
+.tools-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 800px) {
+  .tools-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 500px) {
+  .tools-grid { grid-template-columns: 1fr; }
+}
+
+.tool-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 22px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-card:hover {
+  border-color: var(--border3);
+  background: var(--surface2);
+}
+
+.tool-card.active {
+  border-color: var(--accent-border);
+  background: var(--accent-dim);
+}
+
+.tool-card.coming-soon {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.tool-card.coming-soon:hover {
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+.tool-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.tool-status.live { color: var(--accent); }
+.tool-status.live::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.tool-status.soon { color: var(--text-3); }
+.tool-status.soon::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--text-4);
+}
+
+.tool-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-4);
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+
+.tool-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.tool-desc {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+/* ── PRICING STRIP ── */
+.pricing-section {
+  width: 100%;
+  padding: 0 40px 80px;
+}
+
+.pricing-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.pricing-strip {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--r-lg);
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.pricing-left {}
+
+.pricing-title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.pricing-desc {
+  font-size: 13px;
+  color: var(--text-3);
+  letter-spacing: -0.01em;
+  line-height: 1.5;
+}
+
+.pricing-plans {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.plan {
+  border-radius: var(--r);
+  padding: 14px 20px;
+  min-width: 140px;
+  border: 1px solid var(--border2);
+}
+
+.plan.pro {
+  background: var(--accent);
+  border-color: transparent;
+}
+
+.plan-name {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 6px;
+}
+
+.plan.pro .plan-name { color: rgba(0,0,0,0.5); }
+
+.plan-price {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.plan.pro .plan-price { color: #080809; }
+
+.plan-detail {
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: -0.01em;
+}
+
+.plan.pro .plan-detail { color: rgba(0,0,0,0.45); }
+
+/* ── LOADING ── */
+.loading-section {
+  width: 100%;
+  padding: 120px 40px;
+  text-align: center;
+}
+
+.loading-track {
+  width: 200px;
+  height: 1px;
+  background: var(--surface3);
+  margin: 0 auto 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-track::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -40%;
+  width: 40%; height: 100%;
+  background: var(--accent);
+  animation: scan 1.2s ease-in-out infinite;
+}
+
+@keyframes scan { to { left: 110%; } }
+
+.loading-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.loading-sub {
+  font-size: 11px;
+  color: var(--text-4);
+  letter-spacing: -0.01em;
+}
+
+/* ── ERROR ── */
+.error-box {
+  max-width: 600px;
+  margin: 0 auto 32px;
+  background: rgba(240,71,71,0.05);
+  border: 1px solid rgba(240,71,71,0.12);
+  border-radius: var(--r);
+  padding: 13px 16px;
+  color: var(--red);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+/* ── RESULTS ── */
+.results-section {
+  width: 100%;
+  padding: 0 40px 100px;
+}
+
+.results-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.results-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 0 20px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.r-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.r-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  padding: 4px 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-2);
+}
+
+.r-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+
+.r-frames {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-4);
+  margin-top: 5px;
+}
+
+.reset-btn {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-3);
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: -0.01em;
+}
+
+.reset-btn:hover { color: var(--text-2); border-color: var(--border3); }
+
+/* ── OVERVIEW ── */
+.overview {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--r-lg);
+  padding: 24px 28px;
+  margin-bottom: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 24px;
+}
+
+.ov-key {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 5px;
+}
+
+.ov-val {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.ov-val.code {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--accent);
+  letter-spacing: 0;
+}
+
+.inf-list { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 3px; }
+.inf-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 2px 7px;
+}
+
+/* ── CARDS ── */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.grid-full { margin-bottom: 12px; }
+
+@media (max-width: 680px) { .grid2 { grid-template-columns: 1fr; } }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-dot { width: 5px; height: 5px; border-radius: 1px; background: var(--accent); opacity: 0.5; flex-shrink: 0; }
+
+.card-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  letter-spacing: -0.01em;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.row:last-child { border-bottom: none; }
+
+.rkey { font-size: 11px; color: var(--text-3); flex-shrink: 0; min-width: 100px; padding-top: 1px; letter-spacing: -0.01em; }
+.rval { font-family: var(--mono); font-size: 11px; color: var(--text); text-align: right; line-height: 1.5; }
+.rtags { display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; }
+.rtag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 2px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.rtext {
+  font-size: 11px;
+  color: var(--text-3);
+  text-align: right;
+  line-height: 1.6;
+  max-width: 260px;
+}
+
+.color-grid { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); }
+.color-col:first-child { border-right: 1px solid var(--border); }
+.color-col .row:last-child { border-bottom: none; }
+
+.swatches { display: flex; gap: 6px; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.swatch-col { flex: 1; }
+.swatch { height: 36px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); }
+.swatch-hex { font-family: var(--mono); font-size: 9px; color: var(--text-4); text-align: center; margin-top: 5px; }
+
+.brief-block { padding: 14px 16px; }
+.brief-inner {
+  font-size: 11px;
+  color: var(--text-3);
+  line-height: 1.7;
+  border-left: 1.5px solid var(--accent-border);
+  padding-left: 12px;
+  font-style: italic;
+}
+
+.tech-wrap { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px 16px; }
+.tech-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-border);
+  padding: 4px 10px;
+  border-radius: 100px;
+}
+
+.recreate {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.recreate-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--border2);
+  background: var(--surface2);
+}
+
+.recreate-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.recreate-title::before {
+  content: '';
+  display: block;
+  width: 5px; height: 5px;
+  border-radius: 1px;
+  background: var(--accent);
+  opacity: 0.5;
+}
+
+.diff-chip {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 3px 9px;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.recreate-cols { display: grid; grid-template-columns: 1fr 1fr; }
+.rc { padding: 20px; border-right: 1px solid var(--border); }
+.rc:last-child { border-right: none; }
+.rc-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 12px;
+}
+
+.rc-text { font-size: 12px; color: var(--text-3); line-height: 1.7; letter-spacing: -0.01em; }
+
+.steps-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.step { display: flex; gap: 10px; align-items: flex-start; }
+.step-n { font-family: var(--mono); font-size: 10px; color: var(--text-4); flex-shrink: 0; width: 18px; margin-top: 1px; }
+.step-t { font-size: 12px; color: var(--text-3); line-height: 1.6; }
+
+.key-list { display: flex; flex-direction: column; gap: 8px; }
+.key-item {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.5;
+  padding-left: 12px;
+  position: relative;
+}
+.key-item::before { content: '–'; position: absolute; left: 0; color: var(--text-4); }
+
+/* ── FOOTER ── */
+footer {
+  width: 100%;
+  border-top: 1px solid var(--border);
+  padding: 20px 40px;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-l, .footer-r {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-4);
+  letter-spacing: 0.04em;
+}
+
+.footer-r span { color: var(--text-3); }
+</style>
 </head>
 <body>
-<p class="p1"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1">CINEANALYZER<span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s1">By Marco</span></p>
-<h1 style="margin: 0.0px 0.0px 16.0px 0.0px; text-align: center; font: 40.0px 'Helvetica Neue'; color: #ececef; -webkit-text-stroke: #ececef"><span class="s1">Every frame<br>
-tells you </span><span class="s2">how</span><span class="s1"> it was shot</span></h1>
-<p class="p4"><span class="s1">Paste any video link. Get a complete filmmaker's breakdown — cinematography, lighting, color grade, gear estimate, and how to recreate it.</span></p>
-<p class="p5"><span class="s3">VIDEO URL</span></p>
-<p class="p6"><span class="s1"></span><br></p>
-<p class="p7"><span class="s1">Analyze</span></p>
-<p class="p8"><span class="s3">YouTube</span></p>
-<p class="p8"><span class="s3">Instagram</span></p>
-<p class="p8"><span class="s3">Vimeo</span></p>
-<p class="p8"><span class="s3">TikTok</span></p>
-<p class="p8"><span class="s3">+ more</span></p>
+<div class="page">
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="logo">
+        <div class="logo-mark">
+          <span class="lm1"></span><span class="lm2"></span>
+          <span class="lm3"></span><span class="lm4"></span>
+        </div>
+        <div class="logo-name">CineAnalyzer</div>
+      </div>
+      <div class="nav-right">
+        <span class="nav-link">Tools</span>
+        <span class="nav-link">Pricing</span>
+        <span class="nav-link">by Marco</span>
+        <button class="nav-cta">Get Pro</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div id="heroSection">
+    <div class="hero-section">
+      <div class="hero-inner">
+        <div class="hero-eyebrow">AI Filmmaker Toolkit</div>
+        <h1>Analyze any video.<br>Understand <span class="accent">exactly</span><br>how it was shot.</h1>
+        <p class="hero-desc">Paste a link from YouTube, Instagram, Vimeo, or TikTok. Get a full breakdown of cinematography, lighting, color grade, gear estimate, and how to recreate the look.</p>
+
+        <div class="input-row">
+          <input class="url-input" id="urlInput" type="text"
+            placeholder="paste video url..."
+            autocomplete="off" spellcheck="false"/>
+          <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">Analyze</button>
+        </div>
+
+        <div class="platform-row">
+          <span class="plat-label">supports</span>
+          <span class="plat-tag">YouTube</span>
+          <span class="plat-tag">Instagram</span>
+          <span class="plat-tag">Vimeo</span>
+          <span class="plat-tag">TikTok</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- TOOLS -->
+    <div class="tools-section">
+      <div class="tools-inner">
+        <div class="section-label">All Tools</div>
+        <div class="tools-grid">
+
+          <div class="tool-card active" onclick="document.getElementById('urlInput').focus(); window.scrollTo({top:0,behavior:'smooth'})">
+            <div class="tool-status live">Live</div>
+            <div class="tool-num">01</div>
+            <div class="tool-name">Shot Breakdown</div>
+            <div class="tool-desc">Paste any video link and get a complete cinematographer's analysis — shot types, camera movement, lighting, color grade, and gear estimate.</div>
+          </div>
+
+          <div class="tool-card coming-soon">
+            <div class="tool-status soon">Coming Soon</div>
+            <div class="tool-num">02</div>
+            <div class="tool-name">Color Match</div>
+            <div class="tool-desc">Upload a reference frame and get a step-by-step DaVinci Resolve node setup to match the exact color grade.</div>
+          </div>
+
+          <div class="tool-card coming-soon">
+            <div class="tool-status soon">Coming Soon</div>
+            <div class="tool-num">03</div>
+            <div class="tool-name">B-Roll Mapper</div>
+            <div class="tool-desc">Paste your script or voiceover. Get a timestamped B-roll shot list with search keywords for every line.</div>
+          </div>
+
+          <div class="tool-card coming-soon">
+            <div class="tool-status soon">Coming Soon</div>
+            <div class="tool-num">04</div>
+            <div class="tool-name">Edit Rhythm Analyzer</div>
+            <div class="tool-desc">Upload a cut and get a full pacing report — average shot length, cut frequency, rhythm score, and genre comparison.</div>
+          </div>
+
+          <div class="tool-card coming-soon">
+            <div class="tool-status soon">Coming Soon</div>
+            <div class="tool-num">05</div>
+            <div class="tool-name">Script Supervisor</div>
+            <div class="tool-desc">Upload a screenplay and get a full continuity breakdown — props, wardrobe, screen direction, and conflict flags per scene.</div>
+          </div>
+
+          <div class="tool-card coming-soon">
+            <div class="tool-status soon">Coming Soon</div>
+            <div class="tool-num">06</div>
+            <div class="tool-name">Gear Estimator</div>
+            <div class="tool-desc">Describe a shot or look and get a recommended camera, lens, and lighting package across three budget tiers.</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- PRICING -->
+    <div class="pricing-section" style="padding-top:60px">
+      <div class="pricing-inner">
+        <div class="section-label">Pricing</div>
+        <div class="pricing-strip">
+          <div class="pricing-left">
+            <div class="pricing-title">Free to start. Pro when you need more.</div>
+            <div class="pricing-desc">Free tier includes 3 analyses per month across all tools.<br>Pro unlocks unlimited usage, PDF exports, and early access to new tools.</div>
+          </div>
+          <div class="pricing-plans">
+            <div class="plan">
+              <div class="plan-name">Free</div>
+              <div class="plan-price">$0</div>
+              <div class="plan-detail">3 analyses / month</div>
+            </div>
+            <div class="plan pro">
+              <div class="plan-name">Pro</div>
+              <div class="plan-price">$15</div>
+              <div class="plan-detail">per month · unlimited</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end heroSection -->
+
+  <!-- LOADING -->
+  <div id="loading" style="display:none">
+    <div class="loading-section">
+      <div class="loading-track"></div>
+      <div class="loading-label" id="loadingLabel">Downloading video...</div>
+      <div class="loading-sub">This takes 30–60 seconds</div>
+    </div>
+  </div>
+
+  <!-- ERROR -->
+  <div id="errorBox" style="display:none;padding:0 40px">
+    <div class="error-box" id="errorText"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" style="display:none">
+    <div class="results-section">
+      <div class="results-inner" id="resultsInner"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-l">CineAnalyzer v1.0</div>
+      <div class="footer-r">built by <span>Marco</span></div>
+    </div>
+  </footer>
+
+</div>
+<script>
+const BACKEND = 'https://cineanalysis-production.up.railway.app';
+const steps = ['Downloading video...','Extracting frames...','Reading cinematography...','Analyzing lighting...','Breaking down color...','Writing breakdown...'];
+let si;
+
+function setLoading(on) {
+  document.getElementById('loading').style.display = on ? 'block' : 'none';
+  document.getElementById('analyzeBtn').disabled = on;
+  document.getElementById('urlInput').disabled = on;
+  if (on) {
+    let i = 0;
+    const el = document.getElementById('loadingLabel');
+    el.textContent = steps[0];
+    si = setInterval(() => { i = Math.min(i+1,steps.length-1); el.textContent = steps[i]; }, 6000);
+  } else {
+    clearInterval(si);
+  }
+}
+
+function showError(msg) {
+  document.getElementById('errorText').textContent = '⚠ ' + msg;
+  document.getElementById('errorBox').style.display = 'block';
+}
+
+function hideError() {
+  document.getElementById('errorBox').style.display = 'none';
+}
+
+function tags(arr) {
+  if (!arr?.length) return '<span class="rval">—</span>';
+  return `<div class="rtags">${arr.map(t=>`<span class="rtag">${t}</span>`).join('')}</div>`;
+}
+
+function row(k, v) {
+  if (Array.isArray(v)) return `<div class="row"><span class="rkey">${k}</span>${tags(v)}</div>`;
+  return `<div class="row"><span class="rkey">${k}</span><span class="rval">${v||'—'}</span></div>`;
+}
+
+function rowText(k, v) {
+  return `<div class="row" style="flex-direction:column;gap:5px;align-items:flex-start">
+    <span class="rkey">${k}</span><span class="rtext">${v||'—'}</span>
+  </div>`;
+}
+
+function card(title, body) {
+  return `<div class="card">
+    <div class="card-header"><div class="card-dot"></div><span class="card-title">${title}</span></div>
+    <div>${body}</div>
+  </div>`;
+}
+
+function render(data, platform, frameCount) {
+  const a = data.analysis;
+  const ov=a.overview||{}, cin=a.cinematography||{}, light=a.lighting||{};
+  const color=a.color||{}, edit=a.editing||{}, gear=a.gear_estimate||{}, rec=a.recreate_this_look||{};
+
+  const overview = `<div class="overview">
+    <div class="ov-item"><div class="ov-key">Style</div><div class="ov-val">${ov.style||'—'}</div></div>
+    <div class="ov-item"><div class="ov-key">Genre</div><div class="ov-val code">${ov.genre||'—'}</div></div>
+    <div class="ov-item"><div class="ov-key">Mood</div><div class="ov-val">${ov.mood||'—'}</div></div>
+    <div class="ov-item"><div class="ov-key">Production</div><div class="ov-val code">${ov.production_level||'—'}</div></div>
+    ${ov.influences?.length?`<div class="ov-item" style="grid-column:1/-1">
+      <div class="ov-key">Influences</div>
+      <div class="inf-list">${ov.influences.map(i=>`<span class="inf-tag">${i}</span>`).join('')}</div>
+    </div>`:''}
+  </div>`;
+
+  const cinCard = card('Cinematography',
+    row('Shot types',cin.dominant_shot_types)+row('Movement',cin.camera_movement)+
+    row('Movement feel',cin.movement_feel)+row('Focal lengths',cin.estimated_focal_lengths)+
+    row('Depth of field',cin.depth_of_field)+row('Lens character',cin.lens_characteristics)+
+    row('Aspect ratio',cin.aspect_ratio)+rowText('Framing',cin.framing_notes));
+
+  const lightCard = card('Lighting',
+    row('Style',light.style)+row('Quality',light.quality)+row('Key direction',light.key_direction)+
+    row('Color temp',light.color_temperature)+row('Source',light.natural_vs_artificial)+
+    row('Shadows',light.shadows)+row('Highlights',light.highlights)+rowText('Setup',light.estimated_setup));
+
+  const swatches = color.primary_palette?.length
+    ? `<div class="swatches">${color.primary_palette.map(h=>{const hex=h.startsWith('#')?h:'#'+h;return`<div class="swatch-col"><div class="swatch" style="background:${hex}"></div><div class="swatch-hex">${hex}</div></div>`;}).join('')}</div>`:'';
+
+  const colorCard = `<div class="card">
+    <div class="card-header"><div class="card-dot"></div><span class="card-title">Color Grade</span></div>
+    <div class="color-grid">
+      <div class="color-col">${row('Grade style',color.grade_style)}${row('Saturation',color.saturation_style)}${row('Contrast',color.contrast_style)}${row('LUT style',color.lut_description)}</div>
+      <div class="color-col">${row('Shadows',color.shadows_treatment)}${row('Midtones',color.midtones_treatment)}${row('Highlights',color.highlights_treatment)}${row('Skin tones',color.skin_tone_handling)}</div>
+    </div>
+    ${swatches}
+    ${color.colorist_brief?`<div class="brief-block"><div class="brief-inner">"${color.colorist_brief}"</div></div>`:''}
+  </div>`;
+
+  const editCard = card('Editing & Pacing',
+    row('Avg shot length',edit.avg_shot_length_estimate)+row('Pacing',edit.pacing)+
+    row('Transitions',edit.transition_types)+rowText('Pacing notes',edit.pacing_description)+rowText('Structure',edit.structural_notes));
+
+  const gearCard = card('Gear Estimate',
+    row('Camera tier',gear.camera_tier)+row('Cameras',gear.likely_cameras)+
+    row('Lenses',gear.likely_lenses)+row('Stabilization',gear.stabilization)+row('Accessories',gear.likely_accessories));
+
+  const techCard = `<div class="card">
+    <div class="card-header"><div class="card-dot"></div><span class="card-title">Techniques Identified</span></div>
+    <div class="tech-wrap">${(a.techniques||[]).map(t=>`<span class="tech-tag">${t}</span>`).join('')}</div>
+  </div>`;
+
+  const gradeSteps=(rec.color_grade_steps||[]).map((s,i)=>`<div class="step"><span class="step-n">${String(i+1).padStart(2,'0')}</span><span class="step-t">${s.replace(/^Step \d+:\s*/i,'')}</span></div>`).join('');
+  const keyItems=(rec.key_techniques||[]).map(t=>`<div class="key-item">${t}</div>`).join('');
+
+  const recreate = `<div class="recreate">
+    <div class="recreate-header">
+      <div class="recreate-title">How to Recreate This Look</div>
+      ${rec.difficulty?`<span class="diff-chip">${rec.difficulty}</span>`:''}
+    </div>
+    <div class="recreate-cols">
+      <div class="rc">
+        <div class="rc-label">Camera Settings</div>
+        <div class="rc-text" style="margin-bottom:20px">${rec.camera_settings||'—'}</div>
+        <div class="rc-label">Lighting Setup</div>
+        <div class="rc-text">${rec.lighting_setup||'—'}</div>
+      </div>
+      <div class="rc">
+        <div class="rc-label">Color Grade Steps</div>
+        <div class="steps-list">${gradeSteps}</div>
+        <div class="rc-label">Key Techniques</div>
+        <div class="key-list">${keyItems}</div>
+      </div>
+    </div>
+  </div>`;
+
+  return `
+    <div class="results-top">
+      <div>
+        <div class="r-eyebrow">Analysis complete</div>
+        <div class="r-badge"><div class="r-dot"></div>${platform}</div>
+        <div class="r-frames">${frameCount} frames analyzed</div>
+      </div>
+      <button class="reset-btn" onclick="reset()">← New analysis</button>
+    </div>
+    ${overview}
+    <div class="grid2">${cinCard}${lightCard}</div>
+    <div class="grid-full">${colorCard}</div>
+    <div class="grid2">${editCard}${gearCard}</div>
+    <div class="grid-full">${techCard}</div>
+    ${recreate}
+  `;
+}
+
+async function analyze() {
+  const url = document.getElementById('urlInput').value.trim();
+  if (!url) return;
+  hideError();
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('heroSection').style.display = 'none';
+  setLoading(true);
+  try {
+    const res = await fetch(`${BACKEND}/analyze`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url})});
+    const data = await res.json();
+    if (!res.ok||!data.success) throw new Error(data.detail||'Analysis failed');
+    document.getElementById('resultsInner').innerHTML = render(data,data.platform,data.frame_count);
+    document.getElementById('results').style.display = 'block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  } catch(err) {
+    document.getElementById('heroSection').style.display = 'block';
+    showError(err.message||'Could not connect. Make sure the backend is running on port 8000.');
+  } finally {
+    setLoading(false);
+  }
+}
+
+function reset() {
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('heroSection').style.display = 'block';
+  document.getElementById('urlInput').value = '';
+  hideError();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+document.getElementById('urlInput').addEventListener('keydown', e => {
+  if (e.key==='Enter') analyze();
+});
+</script>
 </body>
 </html>
